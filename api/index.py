@@ -28,7 +28,10 @@ app.add_middleware(
 # ── Load jobs at startup ──────────────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 JOBS_PATH = os.path.join(BASE_DIR, "jobs.json")
-
+if not os.path.exists(JOBS_PATH):
+    JOBS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "jobs.json")
+if not os.path.exists(JOBS_PATH):
+    JOBS_PATH = "/var/task/jobs.json"
 with open(JOBS_PATH, "r") as f:
     JOBS: list[dict] = json.load(f)
 
